@@ -1,0 +1,166 @@
+package main
+
+import (
+	"fmt"
+	"strconv"
+	"strings"
+)
+
+/**
+* Definition for singly-linked list.
+* type ListNode struct {
+*     Val int
+*     Next *ListNode
+* }
+ */
+
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+func main() {
+	iterar por l1 e l1
+
+	colocar seus valores em um slice de interio
+
+	junto cada item do slice1 para se tornar um unico inteiro
+	junto cada item do slice2 para se tornar um unico inteiro
+
+	somar os numeros inteiros de slice1 com slice2
+
+	dar split no resultado de slice1 com slice2
+
+	reverter esse novo slice
+
+	adiciona cada item do slice em uma nova node list
+
+	retornar essa nova node list
+
+
+
+	values := []int{2, 4, 3}
+	values2 := []int{5, 6, 4}
+	head := &ListNode{Val: 0}
+	current := head
+
+	// Cria a lista ligada com os valores
+	l1 := addToList(values)
+	l2 := addToList(values2)
+
+	for l1 != nil {
+		if l2 == nil {
+			break
+		}
+
+		rightNum, leftNum := isGreaterTha10(l2.Val + l1.Val)
+
+		newNode := &ListNode{
+			Val: leftNum,
+		}
+
+		fmt.Println(rightNum, leftNum)
+
+		current.Next = newNode
+		current = newNode
+
+		if l2.Next == nil || l1.Next == nil || rightNum > 0 {
+			if rightNum > 0 {
+				if l2.Next == nil && l1.Next == nil {
+					odd := rightNum % 2
+
+					l2.Next = &ListNode{
+						Val: rightNum/2 + odd,
+					}
+					l1.Next = &ListNode{
+						Val: rightNum/2 + odd,
+					}
+				}
+				if l2.Next == nil {
+					odd := rightNum % 2
+
+					l2.Next = &ListNode{
+						Val: rightNum/2 + odd,
+					}
+				}
+				if l1.Next == nil {
+					odd := rightNum % 2
+
+					l1.Next = &ListNode{
+						Val: rightNum/2 + odd,
+					}
+				} else {
+					l1.Next.Val += rightNum
+				}
+			} else {
+				break
+			}
+		}
+
+		l1 = l1.Next
+		l2 = l2.Next
+	}
+	
+	i := 0
+
+	for head != nil {
+		if i == 0 {
+			i = 1
+			head = head.Next
+			continue
+		}
+
+		fmt.Printf("%d -> ", head.Val)
+
+		if head.Next == nil {
+			break
+		}
+
+		head = head.Next
+	}
+
+	fmt.Println("nil")
+
+}
+
+func isGreaterTha10(n int) (int, int) {
+	if n >= 10 {
+		strSlice := strconv.Itoa(n)
+		nStr := strings.Split(strSlice, "")
+		var sum int
+
+		for i := 0; i < len(nStr)-1; i++ {
+			num, _ := strconv.Atoi(nStr[i])
+			sum += num
+		}
+
+		strNum, _ := strconv.Atoi(nStr[len(nStr)-1])
+		return sum * 10, strNum
+	}
+
+	return 0, n
+}
+
+func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
+
+	return &ListNode{Val: 2}
+}
+
+func addToList(values []int) *ListNode {
+	if len(values) == 0 {
+		return nil
+	}
+
+	// Cria o nó inicial da lista
+	head := &ListNode{Val: values[0]}
+	current := head
+
+	// Adiciona os próximos valores à lista
+	for _, val := range values[1:] {
+		newNode := &ListNode{Val: val}
+		current.Next = newNode
+		current = newNode
+	}
+
+	return head
+}
