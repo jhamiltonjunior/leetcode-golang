@@ -5,40 +5,17 @@ import (
 )
 
 func main() {
-	arr := []int{
-		1,
-		3,
-		4,
-		8,
-	}
+	values := []int{0, 2, 1, 5, 3, 4}
 
-	queries := [][]int{
-		{0, 4},
-		{1, 2},
-		{0, 3},
-		{3, 3},
-	}
-
-	fmt.Println(xorQueries(arr, queries))
+	fmt.Println(buildArray(values))
 }
 
-// ^
-func xorQueries(arr []int, queries [][]int) []int {
-	var arr2 []int
+func buildArray(nums []int) []int {
+	nums2 := make([]int, len(nums))
 
-	for i := 0; i < len(queries); i++ {
-		var poweredNum int
-
-		for j := queries[i][0]; j <= queries[i][1]; j++ {
-			if len(arr) <= j {
-				break
-			}
-
-			poweredNum ^= arr[j]
-		}
-
-		arr2 = append(arr2, poweredNum)
+	for i := 0; i < len(nums); i++ {
+		nums2[i] = nums[nums[i]]
 	}
 
-	return arr2
+	return nums2
 }
